@@ -7,6 +7,15 @@
 .config/polybar/modules.ini
 .config/polybar/user_modules.ini
 .config/qutebrowser/config.py
+.config/htop/htoprc
+.config/lf/lfrc
+.config/lf/scope
+.config/mpv/mpv.conf
+.config/nvim/init.vim
+.config/rofi/config
+.config/rofi/lonyelon.rasi
+.config/zathura/zathurarc
+.config/redshift.conf
 .newsboat/config
 .zshrc
 .bashrc
