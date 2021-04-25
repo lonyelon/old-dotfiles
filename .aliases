@@ -1,0 +1,31 @@
+# Lonyelon's alias file
+
+# Important
+alias ls="ls --color"
+
+# Software
+alias r=ranger
+alias top=bashtop
+alias pc=pacman
+alias ytdl=youtube-dl
+alias b="$BROWSER 2>/dev/null >/dev/null &"
+alias nb=newsboat
+alias m=neomutt
+alias mutt=neomutt
+alias monero="monero-wallet-cli --wallet-file ~/Monero/wallets/lonyelon/lonyelon"
+
+# Git
+alias gadd="git add"
+alias gc="git commit -m"
+alias gp="git push"
+
+# Everything is NeoVim
+alias gedit=nvim
+alias nano=nvim
+alias vim=nvim
+alias vi=nvim
+alias emacs=nvim
+alias nvim=nvim
+
+# Folders
+TFG="cd /home/shared/Documentos/Clase/2021/TFG/system"

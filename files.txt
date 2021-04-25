@@ -1,0 +1,15 @@
+.config/i3/config
+.config/i3/background
+.config/polybar/bars.ini
+.config/polybar/colors.ini
+.config/polybar/config.ini
+.config/polybar/launch.sh
+.config/polybar/modules.ini
+.config/polybar/user_modules.ini
+.config/qutebrowser/config.py
+.newsboat/config
+.zshrc
+.bashrc
+.aliases
+.xinitrc
+.Xresources
