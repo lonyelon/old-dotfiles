@@ -18,6 +18,7 @@
 .config/redshift.conf
 .newsboat/config
 .zshrc
+.shellicons
 .bashrc
 .aliases
 .xinitrc
