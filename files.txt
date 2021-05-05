@@ -16,10 +16,6 @@
 .config/rofi/lonyelon.rasi
 .config/zathura/zathurarc
 .config/redshift.conf
-.newsboat/config
+.config/newsboat/config
+.config/zsh/aliases
 .zshrc
-.shellicons
-.bashrc
-.aliases
-.xinitrc
-.Xresources

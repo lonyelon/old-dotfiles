@@ -2,6 +2,7 @@
 
 # Important
 alias ls="ls --color"
+alias startx="startx \"$HOME/.config//X11/xinitrc\" vt1"
 
 # Software
 alias r=ranger

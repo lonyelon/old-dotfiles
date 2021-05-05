@@ -1,188 +1,80 @@
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
+#                                                                      DEFAULTS
+###############################################################################
+
+HISTFILE=$HOME/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 bindkey -v
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
 zstyle :compinstall filename '/home/lonyelon/.zshrc'
-
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
 
+#                                                                   DIRECTORIES
+###############################################################################
+
+# Cache folders
+mkdir -p "$HOME/.cache/less"
+mkdir -p "$HOME/.cache/zsh"
+mkdir -p "$HOME/.local/share/zsh"
+
+#                                                                     VARIABLES
+###############################################################################
+
+# Default variables
 export LANG=es_ES.UTF-8
 export EDITOR='nvim'
 export BROWSER='qutebrowser'
 
-source ~/.aliases
+# Clean up home
+export PASSWORD_STORE_DIR=$HOME/.local/share/passwords
+export MBSYNCRC="$HOME/.config/isync/mbsyncrc"
+export INPUTRC="$HOME"/.config/readline/inputrc
+export GNUPGHOME="$HOME/.local/share/gnupg"
+export HISTFILE="$HOME/.local/share/zsh/history"
+export NOTMUCH_CONFIG="$HOME/.config/notmuch/notmuchrc"
+export NMBGIT="$HOME/.config/notmuch/nmbug"
+export LESSKEY="$HOME/.config/less/lesskey"
+export LESSHISTFILE="$HOME/.config/less/history"
+export XINITRC="$HOME/.config/X11/xinitrc"
+export XAUTHORITY="$HOME/.config/X11/Xauthority"
 
+compinit -d "$HOME/.cache/zsh/zcompdump"
+
+# Completion
+zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/zcompcache
+
+# Alisases
+source $HOME/.config/zsh/aliases
+
+#                                                                        BANNER
+###############################################################################
+
+# Autostart X server on boot
 [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]] && startx
 
+# Flex
 neofetch
-cat /etc/motd 2>/dev/null
 
-export PS1='%F{green}[%n@%F{yellow}%m%f:%F{blue}%~%F{green}]$%f '
+# Show motd
+lolcat -t -p 1 /etc/motd 2>/dev/null
 
-export LF_ICONS="\
-tw=📁:\
-st=📁:\
-ow=📁:\
-dt=📁:\
-di=📁:\
-fi=:\
-ln=:\
-or=:\
-ex=:\
-*.c=:\
-*.cc=:\
-*.clj=:\
-*.coffee=:\
-*.cpp=:\
-*.css=:\
-*.d=:\
-*.dart=:\
-*.erl=:\
-*.exs=:\
-*.fs=:\
-*.go=:\
-*.h=:\
-*.hh=:\
-*.hpp=:\
-*.hs=:\
-*.html=:\
-*.java=:\
-*.jl=:\
-*.js=:\
-*.json=:\
-*.lua=:\
-*.md=:\
-*.php=:\
-*.pl=:\
-*.pro=:\
-*.py=:\
-*.rb=:\
-*.rs=:\
-*.scala=:\
-*.ts=:\
-*.vim=:\
-*.cmd=:\
-*.ps1=:\
-*.sh=:\
-*.bash=:\
-*.zsh=:\
-*.fish=:\
-*.tar=:\
-*.tgz=:\
-*.arc=:\
-*.arj=:\
-*.taz=:\
-*.lha=:\
-*.lz4=:\
-*.lzh=:\
-*.lzma=:\
-*.tlz=:\
-*.txz=:\
-*.tzo=:\
-*.t7z=:\
-*.zip=:\
-*.z=:\
-*.dz=:\
-*.gz=:\
-*.lrz=:\
-*.lz=:\
-*.lzo=:\
-*.xz=:\
-*.zst=:\
-*.tzst=:\
-*.bz2=:\
-*.bz=:\
-*.tbz=:\
-*.tbz2=:\
-*.tz=:\
-*.deb=:\
-*.rpm=:\
-*.jar=:\
-*.war=:\
-*.ear=:\
-*.sar=:\
-*.rar=:\
-*.alz=:\
-*.ace=:\
-*.zoo=:\
-*.cpio=:\
-*.7z=:\
-*.rz=:\
-*.cab=:\
-*.wim=:\
-*.swm=:\
-*.dwm=:\
-*.esd=:\
-*.jpg=:\
-*.jpeg=:\
-*.mjpg=:\
-*.mjpeg=:\
-*.gif=:\
-*.bmp=:\
-*.pbm=:\
-*.pgm=:\
-*.ppm=:\
-*.tga=:\
-*.xbm=:\
-*.xpm=:\
-*.tif=:\
-*.tiff=:\
-*.png=:\
-*.svg=:\
-*.svgz=:\
-*.mng=:\
-*.pcx=:\
-*.mov=:\
-*.mpg=:\
-*.mpeg=:\
-*.m2v=:\
-*.mkv=:\
-*.webm=:\
-*.ogm=:\
-*.mp4=:\
-*.m4v=:\
-*.mp4v=:\
-*.vob=:\
-*.qt=:\
-*.nuv=:\
-*.wmv=:\
-*.asf=:\
-*.rm=:\
-*.rmvb=:\
-*.flc=:\
-*.avi=:\
-*.fli=:\
-*.flv=:\
-*.gl=:\
-*.dl=:\
-*.xcf=:\
-*.xwd=:\
-*.yuv=:\
-*.cgm=:\
-*.emf=:\
-*.ogv=:\
-*.ogx=:\
-*.aac=:\
-*.au=:\
-*.flac=:\
-*.m4a=:\
-*.mid=:\
-*.midi=:\
-*.mka=:\
-*.mp3=:\
-*.mpc=:\
-*.ogg=:\
-*.ra=:\
-*.wav=:\
-*.oga=:\
-*.opus=:\
-*.spx=:\
-*.xspf=:\
-*.pdf=:\
-*.nix=:\
-"
+# Check for orphans
+deps="$(pacman -Qdtq | wc -l)"
+[ ! "$deps" -eq 0 ] && >&2 echo "\033[31;1m[ERROR] $deps orphans found, remove them with: pacman -Rns \$(pacman -Qdtq)\033[0;0m"
+
+# Check if miner is running
+minercount="$(ps -aux | grep ethminer | wc -l)"
+[ "$minercount" -le 1 ] && >&2 echo "\033[31;1m[ERROR] Miner is not running!\033[0;0m"
+
+# Samba mounted?
+[ -z "$(mount | grep /home/shared)" ] && >&2 echo "\033[31;1m[ERROR] Samba directory is not mounted! run: sudo mount -a\033[0;0m"
+
+# Look for unread emails
+newmail=$($HOME/sh/count-new-mail.sh)
+[ "$newmail" -eq 1 ] && echo "\033[34;1m[WARNING] You have a pending email!\033[0;0m"
+[ "$newmail" -gt 1 ] && echo "\033[34;1m[WARNING] $newmail unread emails found!\033[0;0m"
+
+#                                                                           PS1
+###############################################################################
+
+export PS1='%F{green}[%F{magenta}%l%f:%F{cyan}%!%F{green}][%F{red}%n%f@%F{yellow}%m%f:%F{blue}%~%F{green}]$%f '

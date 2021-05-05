@@ -1,12 +1,24 @@
-set nu
-set rnu
-set tabstop=4
-set shiftwidth=4
+syntax enable
+
+set hidden
+"set nowrap
+set encoding=utf-8
+set fileencoding=utf-8
+set ruler
+set iskeyword+=-
+"set mouse=a
 
 set splitbelow
 set splitright
 
+set conceallevel=0
+
+set nu
+set rnu
+set tabstop=4
+set shiftwidth=4
 set colorcolumn=80
+
 highlight ColorColumn ctermbg=black guibg=black
 
 nnoremap ñn :set rnu!<CR>
